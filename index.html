@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB Community - منصة العمل الحر للشباب والمبدعين</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header>
+        <a href="#" class="logo-container" onclick="showSection('heroSection')">
+            <img src="logo.png" alt="AB Community" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="logo-text" style="display: none;">AB Community</span>
+        </a>
+        
+        <div class="nav-right" id="navButtons">
+            <button class="nav-btn-secondary" id="openContactModal">تواصل مع الإدارة</button>
+            <button class="nav-btn" id="openAuthModal">تسجيل حساب جديد</button>
+        </div>
+    </header>
+
+    <!-- الصفحة الرئيسية -->
+    <section id="heroSection" class="page-section active hero">
+        <img src="logo.png" alt="AB Community Logo" class="hero-logo" onerror="this.style.display='none';">
+        <h1>موهبتك ملهاش سن.. ابدأ رحلتك مع AB Community</h1>
+        <p>المنصة الأولى المخصصة للشباب والمبدعين تحت السن لبدء تقديم خدماتهم للعملاء بكل أمان وثقة.</p>
+        <button class="nav-btn" onclick="showSection('marketplaceSection')">استعرض الخدمات</button>
+    </section>
+
+    <!-- سوق الخدمات (فارغ ونظيف في البداية) -->
+    <section id="marketplaceSection" class="page-section">
+        <div class="container">
+            <h2 class="section-title">خدمات المبدعين</h2>
+            <div class="grid-cards" id="servicesGrid">
+                <p style="color: #94a3b8;">لا توجد خدمات مضافة حالياً. كن أول من يسجل!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- نافذة تسجيل حساب جديد (جاهزة للربط بـ Web3Forms للإيميل) -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <h2 id="modalTitle">تسجيل حساب جديد</h2>
+            
+            <div id="stepRole">
+                <p style="margin-bottom: 15px; text-align: center; color: #94a3b8;">حابب تنضم لينا كإيه؟</p>
+                <div class="role-cards">
+                    <div class="role-card" onclick="selectRole('client')">
+                        <h3>عميل</h3>
+                        <p style="font-size: 11px; color: #94a3b8;">عايز أطلب خدمات</p>
+                    </div>
+                    <div class="role-card" onclick="selectRole('freelancer')">
+                        <h3>فري لانسر</h3>
+                        <p style="font-size: 11px; color: #94a3b8;">عايز أقدم خدماتي</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ملاحظة: لما تجيب الـ Access Key حطه في الـ input اللي تحت -->
+            <form id="authForm" style="display: none;" action="https://api.web3forms.com/submit" method="POST">
+                
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" name="name" required placeholder="اكتب اسمك هنا">
+                </div>
+
+                <div class="form-group" id="ageGroup">
+                    <label>السن (العمر)</label>
+                    <input type="number" name="age" placeholder="مثال: 16">
+                </div>
+
+                <div id="freelancerExtraFields" style="display: none;">
+                    <div class="form-group">
+                        <label>اختر مجالات عملك</label>
+                        <div class="skills-grid">
+                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="برمجة"> برمجة</label>
+                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="تصميم"> تصميم جرافيك</label>
+                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="مونتاج"> مونتاج فيديو</label>
+                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="كتابة"> كتابة وترجمة</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" name="email" required placeholder="name@example.com">
+                </div>
+                
+                <button type="submit" class="submit-btn">إتمام وإرسال الطلب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة التواصل -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-box">
+            <h2>تواصل مع الإدارة</h2>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <div class="form-group">
+                    <label>اسمك</label>
+                    <input type="text" name="name" required placeholder="اكتب اسمك">
+                </div>
+                <div class="form-group">
+                    <label>بريدك الإلكتروني</label>
+                    <input type="email" name="email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>استفسارك</label>
+                    <textarea name="message" rows="3" required placeholder="اكتب استفسارك..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">إرسال</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

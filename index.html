@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AB Community - منصة العمل الحر للشباب والمبدعين</title>
     <link rel="stylesheet" href="style.css">
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
     <!-- الهيدر -->
     <header>
         <a href="#" class="logo-container" onclick="showSection('heroSection')">
-            <img src="logo.png" alt="AB Community" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <img src="logo.png" alt="AB Community Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
             <span class="logo-text" style="display: none;">AB Community</span>
         </a>
-        
+
         <div class="nav-right" id="navButtons">
             <button class="nav-btn-secondary" id="openContactModal">تواصل مع الإدارة</button>
             <button class="nav-btn" id="openAuthModal">تسجيل حساب جديد</button>
@@ -24,12 +26,12 @@
     <!-- الصفحة الرئيسية -->
     <section id="heroSection" class="page-section active hero">
         <img src="logo.png" alt="AB Community Logo" class="hero-logo" onerror="this.style.display='none';">
-        <h1>موهبتك ملهاش سن.. ابدأ رحلتك مع AB Community</h1>
-        <p>المنصة الأولى المخصصة للشباب والمبدعين تحت السن لبدء تقديم خدماتهم للعملاء بكل أمان وثقة.</p>
+        <h1>أهلاً بك في AB Community</h1>
+        <p>المنصة الأولى المهتمة بالشباب والمبدعين تحت السن لبدء العمل الحر بأمان وثقة</p>
         <button class="nav-btn" onclick="showSection('marketplaceSection')">استعرض الخدمات</button>
     </section>
 
-    <!-- سوق الخدمات (فارغ ونظيف في البداية) -->
+    <!-- سوق الخدمات - ظاهرة في البداية -->
     <section id="marketplaceSection" class="page-section">
         <div class="container">
             <h2 class="section-title">خدمات المبدعين</h2>
@@ -39,13 +41,13 @@
         </div>
     </section>
 
-    <!-- نافذة تسجيل حساب جديد (جاهزة للربط بـ Web3Forms للإيميل) -->
+    <!-- نافذة التسجيل المنبثقة -->
     <div class="modal-overlay" id="authModal">
         <div class="modal-box">
             <h2 id="modalTitle">تسجيل حساب جديد</h2>
-            
+
             <div id="stepRole">
-                <p style="margin-bottom: 15px; text-align: center; color: #94a3b8;">حابب تنضم لينا كإيه؟</p>
+                <p style="margin-bottom: 15px; text-align: center; color: #94a3b8;">حابين ننضم لينا بايه؟</p>
                 <div class="role-cards">
                     <div class="role-card" onclick="selectRole('client')">
                         <h3>عميل</h3>
@@ -58,38 +60,33 @@
                 </div>
             </div>
 
-            <!-- ملاحظة: لما تجيب الـ Access Key حطه في الـ input اللي تحت -->
-            <form id="authForm" style="display: none;" action="https://api.web3forms.com/submit" method="POST">
-                
-                <input type="hidden" name="access_key" value="aaba22d4-d7fa-42b8-a0ec-00c3468de5a8">
-
+            <!-- تم تعديل الفورم لتعمل مع Supabase مباشرة -->
+            <form id="authForm" style="display: none;">
                 <div class="form-group">
                     <label>الاسم الكامل</label>
-                    <input type="text" name="name" required placeholder="اكتب اسمك هنا">
+                    <input type="text" id="name" name="name" required placeholder="اكتب اسمك هنا">
                 </div>
 
                 <div class="form-group" id="ageGroup">
-                    <label>السن (العمر)</label>
-                    <input type="number" name="age" placeholder="مثال: 16">
+                    <label>السن</label>
+                    <input type="number" id="age" name="age" placeholder="مثال: 16">
                 </div>
 
-                <div id="freelancerExtraFields" style="display: none;">
-                    <div class="form-group">
-                        <label>اختر مجالات عملك</label>
-                        <div class="skills-grid">
-                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="برمجة"> برمجة</label>
-                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="تصميم"> تصميم جرافيك</label>
-                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="مونتاج"> مونتاج فيديو</label>
-                            <label class="skill-checkbox"><input type="checkbox" name="skills" value="كتابة"> كتابة وترجمة</label>
-                        </div>
+                <div class="form-group" id="freelancerExtraFields" style="display: none;">
+                    <label>اختر مجالك أو مهاراتك</label>
+                    <div class="skills-grid">
+                        <label class="skill-checkbox"><input type="checkbox" name="skills" value="برمجة"> برمجة</label>
+                        <label class="skill-checkbox"><input type="checkbox" name="skills" value="تصميم"> تصميم</label>
+                        <label class="skill-checkbox"><input type="checkbox" name="skills" value="مونتاج"> مونتاج</label>
+                        <label class="skill-checkbox"><input type="checkbox" name="skills" value="كتابة"> كتابة</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>البريد الإلكتروني</label>
-                    <input type="email" name="email" required placeholder="name@example.com">
+                    <input type="email" id="email" name="email" required placeholder="name@example.com">
                 </div>
-                
+
                 <button type="submit" class="submit-btn">إتمام وإرسال الطلب</button>
             </form>
         </div>

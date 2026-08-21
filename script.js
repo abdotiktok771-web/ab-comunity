@@ -1,3 +1,7 @@
+const SUPABASE_URL = 'eyyxkwcmqcgapjujpfdj';
+const SUPABASE_ANON_KEY = 'sb_publishable_eJIh9HPIWtRAfWmzA96qUQ_jWoDcjZB';
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const authModal = document.getElementById('authModal');
 const contactModal = document.getElementById('contactModal');
 const openAuthModalBtn = document.getElementById('openAuthModal');
@@ -43,4 +47,33 @@ function selectRole(role) {
         ageGroup.style.display = 'block';
         freelancerExtraFields.style.display = 'block';
     }
+}
+// كود إرسال البيانات إلى Supabase عند الضغط على زر التسجيل
+const form = document.getElementById('authForm'); // تأكد إن ده أيدي الفورم عندك أو زر التسجيل
+
+if (form) {
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // جلب البيانات من الحقول (تأكد من مطابقة الـ IDs مع ملف الـ HTML)
+        const name = document.getElementById('name')?.value;
+        const age = document.getElementById('age')?.value;
+        const email = document.getElementById('email')?.value;
+        const skills = document.getElementById('skills')?.value;
+
+        // إرسال البيانات للجدول freelancer 1
+        const { data, error } = await supabase
+            .from('freelancer 1')
+            .insert([
+                { name: name, age: age ? parseInt(age) : null, email: email, skills: skills, status: 'pending' }
+            ]);
+
+        if (error) {
+            console.error('خطأ في التسجيل:', error);
+            alert('حدث خطأ أثناء التسجيل، حاول مرة أخرى.');
+        } else {
+            alert('تم التسجيل بنجاح!');
+            form.reset(); // تفريغ الحقول بعد التسجيل
+        }
+    });
 }
